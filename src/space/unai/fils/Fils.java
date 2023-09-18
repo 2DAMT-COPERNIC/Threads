@@ -10,20 +10,24 @@ import java.util.List;
 public class Fils {
 
     @Getter
-    private static List<Hilo> threads = new ArrayList<>();
+    private static List<Hilo> threads = new ArrayList<>(); // lista de threads
 
-    private static final int DEFAULT_TIME = 1000;
+    private static final int DEFAULT_TIME = 1000; // Default time,
+                                                  // modificar si quieres esperar una eternidad
 
     public static void main(String[] args) {
-        System.out.println("Hola " + Hilo.currentThread().getName());
+        System.out.println("Hola " + Hilo.currentThread().getName()); // Prueba de inicio
 
+
+        // No hacen falta guardar los hilos, se guardan automáticamente
         new Hilo("Pedro", DEFAULT_TIME);
         new Hilo("Pepe", DEFAULT_TIME);
         new Hilo("Xavi", DEFAULT_TIME);
 
+        // Recorre la lista para que se inicie
         for (int y = 0; y < getThreads().size(); y++) {
             Hilo h = getThreads().get(y);
-            h.setTiempo(h.getTiempo() * y);
+            h.setTiempo(h.getTiempo() * y); // Multiplica el tiempo por el iterador
             h.start();
         }
     }
@@ -31,14 +35,14 @@ public class Fils {
 
 class Hilo extends Thread {
 
-    @Getter
-    @Setter
+    @Getter // Instanciar getTiempo();
+    @Setter // Instanciar setTiempo(int t);
     private int tiempo;
 
     public Hilo(String nom, int tiempo) {
         super(nom);
-        this.tiempo = tiempo;
-        Fils.getThreads().add(this);
+        this.tiempo = tiempo; // Instanciar tiempo
+        Fils.getThreads().add(this); // Añadir hilo a la lista
     }
 
 
