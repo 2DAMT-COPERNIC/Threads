@@ -4,42 +4,53 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Fils {
 
+    @Getter
+    private static List<Hilo> threads = new ArrayList<>();
+
+    private static int DEFAULT_TIME = 1000;
+
     public static void main(String[] args) {
-        Thread thread = new Hilo1("Pedro");
-        thread.setPriority(Thread.MAX_PRIORITY);
-        thread.start();
+        System.out.println("Hola " + Hilo.currentThread().getName());
 
-        Thread thread2 = new Hilo1("Pepe");
-        thread2.setPriority(Thread.MIN_PRIORITY);
-        thread2.start();
+        Hilo t1 = new Hilo("Pedro", DEFAULT_TIME);
+        Hilo t2 = new Hilo("Pepe", DEFAULT_TIME);
+        Hilo t3 = new Hilo("Xavi", DEFAULT_TIME);
 
+        for (int y = 0; y < getThreads().size(); y++) {
+            Hilo h = getThreads().get(y);
+            h.setTiempo(h.getTiempo() * y);
+            h.start();
+        }
     }
 }
 
-class Hilo1 extends Thread {
+class Hilo extends Thread {
 
     @Getter
     @Setter
-    private String nom;
+    private int tiempo;
 
-    public Hilo1(String nom) {
-        this.nom = nom;
+    public Hilo(String nom, int tiempo) {
+        super(nom);
+        this.tiempo = tiempo;
+        Fils.getThreads().add(this);
     }
 
 
     @SneakyThrows
     @Override
     public void run() {
-        System.out.println("[" + nom + "] starts");
-        wait(2000);
-        System.out.println("[" + nom + "] ends");
+        System.out.println("[" + this.getName() + "] starts");
+        wait(tiempo);
+        System.out.println("[" + this.getName() + "] ends");
     }
 
-    public static void wait(int t) {
+    public void wait(int t) {
         try {
             Thread.sleep(t);
         } catch (InterruptedException e) {
