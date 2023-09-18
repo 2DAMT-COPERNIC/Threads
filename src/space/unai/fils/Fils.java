@@ -12,14 +12,14 @@ public class Fils {
     @Getter
     private static List<Hilo> threads = new ArrayList<>();
 
-    private static int DEFAULT_TIME = 1000;
+    private static final int DEFAULT_TIME = 1000;
 
     public static void main(String[] args) {
         System.out.println("Hola " + Hilo.currentThread().getName());
 
-        Hilo t1 = new Hilo("Pedro", DEFAULT_TIME);
-        Hilo t2 = new Hilo("Pepe", DEFAULT_TIME);
-        Hilo t3 = new Hilo("Xavi", DEFAULT_TIME);
+        new Hilo("Pedro", DEFAULT_TIME);
+        new Hilo("Pepe", DEFAULT_TIME);
+        new Hilo("Xavi", DEFAULT_TIME);
 
         for (int y = 0; y < getThreads().size(); y++) {
             Hilo h = getThreads().get(y);
