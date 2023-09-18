@@ -12,17 +12,16 @@ public class ConnServer {
         System.out.println("[SERVER] INIT CONNECTION");
 
         try {
-            ServerSocket ssk = new ServerSocket(8100);
-            Socket sk = ssk.accept();
+            ServerSocket ssk = new ServerSocket(8100); // Instanciamos el servidor
+            Socket sk = ssk.accept(); // Abrimos socket para recibir
 
-            InputStream inStream = sk.getInputStream();
-            OutputStream outStream = sk.getOutputStream();
+            InputStream inStream = sk.getInputStream(); // Instanciamos el InputStream
 
-            byte leido = (byte) inStream.read();
+            byte leido = (byte) inStream.read(); // Leemos el InputStream
 
-            System.out.println("Read byte: " + leido);
+            System.out.println("Read byte: " + leido); // Soltamos por pantalla
 
-            sk.close();
+            sk.close(); // Cerramos socket
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
