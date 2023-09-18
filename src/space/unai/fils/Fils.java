@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Fils {
 
-    @Getter
+    @Getter // Instanciar getThreads();
     private static List<Hilo> threads = new ArrayList<>(); // lista de threads
 
     private static final int DEFAULT_TIME = 1000; // Default time,
@@ -33,9 +33,9 @@ public class Fils {
     }
 }
 
+@Getter // Instanciar get..() de la clase;
 class Hilo extends Thread {
 
-    @Getter // Instanciar getTiempo();
     @Setter // Instanciar setTiempo(int t);
     private int tiempo;
 
@@ -45,8 +45,6 @@ class Hilo extends Thread {
         Fils.getThreads().add(this); // Añadir hilo a la lista
     }
 
-
-    @SneakyThrows
     @Override
     public void run() {
         System.out.println("[" + this.getName() + "] starts");
