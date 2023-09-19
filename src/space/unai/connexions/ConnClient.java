@@ -8,14 +8,15 @@ import java.util.Scanner;
 
 public class ConnClient {
 
-    private static Scanner sc;
-    public static int QUANTITY;
+    private static Scanner sc; // Declaramos scanner
+    public static int QUANTITY = 1; // Declaramos cantidad en estático (declaramos por encima de uno para poder hacer start del servidor)
 
     public static void main(String[] args) {
         System.out.println("[SERVER] INIT CONNECTION");
-        sc = new Scanner(System.in);
+        sc = new Scanner(System.in); // Inicializamos scanner
 
-        QUANTITY = sc.nextInt();
+        System.out.println("[!] ¿Cuantos bytes quieres enviar?");
+        QUANTITY = sc.nextInt(); // Pedimos datos al usuario
 
         try {
             Socket sk = new Socket("127.0.0.1", 8100); // Abrimos socket para enviar
@@ -27,8 +28,8 @@ public class ConnClient {
                 OutputStream outStream = sk.getOutputStream(); // Instanciamos OutputStream
                 outStream.write(b); // Escribimos byte en el Socket y enviamos
                 System.out.println("Sent byte: " + b + " (" + sk.getInetAddress() + ":" + sk.getPort() + ")"); // Imprimimos por pantalla que hemos enviado
-                b++;
-                Thread.sleep(1000);
+                b++; // Iteramos el byte;
+                Thread.sleep(1000); // Dormimos hilo
             }
 
         } catch (IOException | InterruptedException e) {
