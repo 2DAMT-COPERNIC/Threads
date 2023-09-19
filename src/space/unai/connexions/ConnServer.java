@@ -9,21 +9,44 @@ import java.net.Socket;
 public class ConnServer {
 
     public static void main(String[] args) {
-        System.out.println("[SERVER] INIT CONNECTION");
-
         try {
-            ServerSocket ssk = new ServerSocket(8100); // Instanciamos el servidor
-            Socket sk = ssk.accept(); // Abrimos socket para recibir
-
-            InputStream inStream = sk.getInputStream(); // Instanciamos el InputStream
-
-            byte leido = (byte) inStream.read(); // Leemos el InputStream
-
-            System.out.println("Read byte: " + leido); // Soltamos por pantalla
-
-            sk.close(); // Cerramos socket
+            System.out.println("[!] SERVER CONNECTION IS NOW ONLINE");
+            ServerSocket ssk = new ServerSocket(8100);
+            int n = 5;
+            while (n > 0) {
+                Socket sk = ssk.accept();
+                Server sv = new Server(sk);
+                sv.start();
+                n--;
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+
+    public static class Server extends Thread {
+        private Socket sk;
+        private InputStream in;
+        private OutputStream os;
+
+        public Server(Socket sk) {
+            this.sk = sk;
+        }
+
+        @Override
+        public void run() {
+            try {
+                for (int i = 0; i < ConnClient.QUANTITY; i++) {
+                    in = sk.getInputStream();
+                    os = sk.getOutputStream();
+
+                    System.out.println("Leido byte (" + sk.getInetAddress() + ":" + sk.getPort() + "): " + in.read());
+                }
+                sk.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
